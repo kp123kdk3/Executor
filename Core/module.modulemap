@@ -1,0 +1,6 @@
+framework module ExecutorCore {
+    umbrella header "include/ExecutorCore/ExecutorCore.h"
+    
+    export *
+    module * { export * }
+} 

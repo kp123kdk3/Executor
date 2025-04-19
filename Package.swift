@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version: 5.7
 import PackageDescription
 
 let package = Package(
@@ -12,31 +12,19 @@ let package = Package(
             targets: ["Executor"]
         )
     ],
-    dependencies: [
-        // Add any dependencies here
-    ],
     targets: [
+        .target(
+            name: "ExecutorCore",
+            path: "Frontend",
+            sources: ["ProcessManager.m"],
+            publicHeadersPath: "."
+        ),
         .executableTarget(
             name: "Executor",
-            dependencies: [],
-            path: ".",
-            sources: [
-                "Frontend",
-                "Loader",
-                "Hooking",
-                "Scripting",
-                "Security"
-            ],
-            cxxSettings: [
-                .headerSearchPath("Scripting"),
-                .define("LUA_COMPAT_5_3")
-            ],
-            linkerSettings: [
-                .linkedFramework("Foundation"),
-                .linkedFramework("AppKit"),
-                .linkedFramework("CommonCrypto")
-            ]
+            dependencies: ["ExecutorCore"],
+            path: "Frontend",
+            exclude: ["ProcessManager.m"],
+            sources: ["ScriptingInterfaceApp.swift"]
         )
-    ],
-    cxxLanguageStandard: .cxx17
+    ]
 ) 
